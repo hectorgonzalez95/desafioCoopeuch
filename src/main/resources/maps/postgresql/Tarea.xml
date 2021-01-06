@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.hector.desafioCoopeuch.mappers.TareaMapper">
+
+    <resultMap type="com.hector.desafioCoopeuch.modelo.Tarea" id="tareaPojo">
+        <id property="id" column="id"/>
+        <result property="descripcion" column="descripcion"/>
+        <result property="fechaCreacion" column="fecha_creacion"/>
+        <result property="vigente" column="vigente"/>        
+    </resultMap>
+    
+    <resultMap type="com.hector.desafioCoopeuch.modelo.ListadoTareas" id="listadoTareasPojo">
+        <id property="id" column="id"/>
+        <result property="descripcion" column="descripcion"/>
+        <result property="fechaCreacion" column="fecha_creacion"/>
+        <result property="vigente" column="vigente"/>        
+    </resultMap>
+   
+    <sql id="tareaSQL">
+        SELECT id, descripcion, fecha_creacion, vigente 
+		FROM tarea.tarea
+    </sql>    
+
+    <insert id="agregarTarea" parameterType="com.hector.desafioCoopeuch.modelo.Tarea" >        
+        INSERT INTO tarea.tarea(id, descripcion, fecha_creacion, vigente)
+        VALUES( (select COALESCE(MAX(id),0)+1 from tarea.tarea), #{descripcion}, #{fechaCreacion}, #{vigente})
+    </insert>
+
+    <select id="obtieneTareas" parameterType="Object" resultMap="listadoTareasPojo">
+        <include refid="tareaSQL"/>       
+    </select>
+
+    <update id="editarTarea" parameterType="com.hector.desafioCoopeuch.modelo.Tarea">
+        UPDATE tarea.tarea        
+		SET descripcion= #{descripcion}, fecha_creacion=#{fechaCreacion}, vigente=#{vigente}
+		WHERE id = #{id}
+    </update>    
+
+</mapper>
+
