@@ -78,12 +78,12 @@ public class TareaService {
     	try {			
 			List<ListadoTareas> tareas = tareaRepositorio.obtieneTareas();			
 			dto.setTareas(tareas);
-			dto.setTieneErrores(false);
-			return dto;
+			dto.setTieneErrores(false);			
 		} catch (Exception e) {
-			dto.setTieneErrores(true);
-			return dto;
+			dto.setTieneErrores(true);			
 		}
+    	
+    	return dto;
     	
 	}
     
