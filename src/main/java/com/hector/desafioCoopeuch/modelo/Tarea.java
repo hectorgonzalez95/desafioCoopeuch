@@ -19,6 +19,8 @@ public class Tarea implements Serializable{
 	@JsonFormat(pattern = "dd-MM-yyyy", shape = JsonFormat.Shape.STRING)
 	private LocalDate fechaCreacion;
 	private boolean vigente;
+	private String cualquierCosa;
+
 	public Integer getId() {
 		return id;
 	}
@@ -49,7 +51,12 @@ public class Tarea implements Serializable{
 	public void setVigente(boolean vigente) {
 		this.vigente = vigente;
 	}
-	
-	
-	
+
+	public String getCualquierCosa() {
+		return cualquierCosa;
+	}
+
+	public void setCualquierCosa(String cualquierCosa) {
+		this.cualquierCosa = cualquierCosa;
+	}
 }
