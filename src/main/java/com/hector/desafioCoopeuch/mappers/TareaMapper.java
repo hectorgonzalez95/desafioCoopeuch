@@ -14,6 +14,6 @@ public interface TareaMapper {
 
 	void editarTarea(Tarea tarea);
 
-	List<ListadoTareas> obtieneTareas();
+	List<Tarea> obtieneTareas();
 
 }

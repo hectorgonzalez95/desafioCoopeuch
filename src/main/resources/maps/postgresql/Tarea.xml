@@ -23,12 +23,12 @@
 		FROM tarea.tarea
     </sql>    
 
-    <insert id="agregarTarea" parameterType="com.hector.desafioCoopeuch.modelo.Tarea" >        
+    <insert id="agregarTarea" parameterType="com.hector.desafioCoopeuch.modelo.Tarea">
         INSERT INTO tarea.tarea(id, descripcion, fecha_creacion, vigente)
         VALUES( (select COALESCE(MAX(id),0)+1 from tarea.tarea), #{descripcion}, #{fechaCreacion}, #{vigente})
     </insert>
 
-    <select id="obtieneTareas" parameterType="Object" resultMap="listadoTareasPojo">
+    <select id="obtieneTareas" parameterType="Object" resultMap="tareaPojo">
         <include refid="tareaSQL"/>       
     </select>
 

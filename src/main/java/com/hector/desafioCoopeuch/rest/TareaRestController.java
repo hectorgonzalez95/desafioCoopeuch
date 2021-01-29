@@ -8,13 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import com.hector.desafioCoopeuch.modelo.ListadoTareas;
 import com.hector.desafioCoopeuch.modelo.ResponseDto;
@@ -28,7 +22,9 @@ import io.swagger.annotations.ApiParam;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 
+@CrossOrigin(origins = {"http://localhost:4200"})
 @RestController
+@RequestMapping("/api")
 @Api(value = "tarea-controller", produces = MediaType.APPLICATION_JSON_VALUE)
 public class TareaRestController {
 	
@@ -41,15 +37,8 @@ public class TareaRestController {
 	@GetMapping(value = "/obtener-tareas", produces = MediaType.APPLICATION_JSON_VALUE)
 	@ApiResponses({ @ApiResponse(code = 204, message = "No se encuentran tareas"),
 			@ApiResponse(code = 200, message = "Tareas encontradas", response = Tarea.class) })
-	public ResponseEntity<List<ListadoTareas>> obtieneTareas() {
-				
-		ResponseDto dto = tareaService.obtieneTareas();
-		if (!dto.isTieneErrores()) {
-			logger.info("obtiene tareas exitoso");
-			return Responses.ok(dto.getTareas());
-		} else {			
-			return Responses.noContent(null);
-		}
+	public List<Tarea> obtieneTareas() {
+		return tareaService.obtieneTareas();
 	}
 	
 	
@@ -59,17 +48,12 @@ public class TareaRestController {
 		@ApiResponse(code = 409, message = "No se pudo Ingresar la tarea", response = HttpStatus.class),
 		})
 	@PostMapping(value = "/agregar-tarea", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<Tarea> agregarTarea(
-			@ApiParam(defaultValue="", name = "descripcion", value = "descripcion de la tarea", required = true) @RequestParam(defaultValue="", required = false) String descripcion,
-			@ApiParam(defaultValue="", name = "fecha", value = "fecha de creación dd-MM-yyyy", required = true) @RequestParam(defaultValue="", required = false) String fecha,
-			@ApiParam(defaultValue="", name = "vigente", value = "Vigencia de la tarea", required = true) @RequestParam(defaultValue="", required = false) Boolean vigente){		
-		
-		Tarea tarea = new Tarea();
-		tarea.setDescripcion(descripcion);
-		tarea.setStrFecha(fecha);
-		tarea.setVigente(vigente);
-		tareaService.agregarTarea(tarea);		
-		return Responses.created(tarea);
+	public List<Tarea> agregarTarea(@RequestBody Tarea tarea){
+
+		tareaService.agregarTarea(tarea);
+		List<Tarea> tareas =  tareaService.obtieneTareas();
+		String aaa = "sss";
+		return tareas;
 	}
 	
 	

@@ -45,17 +45,11 @@ public class TareaService {
     
     
     @Transactional
-	public boolean agregarTarea(Tarea tarea) {
-    	try {
+	public void agregarTarea(Tarea tarea) {
     		DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("dd-MM-yyyy");
     		tarea.setFechaCreacion(LocalDate.parse(tarea.getStrFecha(), formatoFecha));
     		logger.info("Tarea agregada");
     		tareaRepositorio.agregarTarea(tarea);
-    		return false;
-		} catch (Exception e) {
-			return true;
-		}
-    	
 	}
     
     @Transactional
@@ -72,19 +66,10 @@ public class TareaService {
 		}
     	
 	}
-    
-    public ResponseDto obtieneTareas() {
-    	ResponseDto dto = new ResponseDto();
-    	try {			
-			List<ListadoTareas> tareas = tareaRepositorio.obtieneTareas();			
-			dto.setTareas(tareas);
-			dto.setTieneErrores(false);			
-		} catch (Exception e) {
-			dto.setTieneErrores(true);			
-		}
-    	
-    	return dto;
-    	
+
+	@Transactional
+    public List<Tarea> obtieneTareas() {
+        return tareaRepositorio.obtieneTareas();
 	}
     
     public String jsonErrores(BindingResult result) {

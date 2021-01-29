@@ -2,8 +2,6 @@ package com.hector.desafioCoopeuch.repositorio;
 
 import java.util.List;
 
-import javax.validation.Valid;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,13 +21,8 @@ public class TareaRepositorio {
     private TareaMapper tareaMapper;
 
     public void agregarTarea(Tarea tarea) {
-    	
-    	try {
-    		tareaMapper.agregarTarea(tarea);
-        } catch (DataAccessException ex) {
-            logger.error("Error al agregar tarea", ex);            
-        }
-	}
+    	tareaMapper.agregarTarea(tarea);
+    }
 
 	public void editarTarea(Tarea tarea) {
 		try {
@@ -40,7 +33,7 @@ public class TareaRepositorio {
 		
 	}
 
-	public List<ListadoTareas> obtieneTareas() {		
+	public List<Tarea> obtieneTareas() {
     	return tareaMapper.obtieneTareas();
     }
 
